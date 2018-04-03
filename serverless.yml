@@ -11,11 +11,11 @@ provider:
   stage: dev
   region: us-west-2
   environment:
-    CLIENT_ID: '<YOUR_SLACK_CLIENT_ID>'
-    CLIENT_SECRET: '<YOUR_SLACK_CLIENT_SECRET>'
-    VERIFICATION_TOKEN: '<YOUR_SLACK_VERIFICATION_TOKEN>'
-    INSTALL_ERROR_URL: '<YOUR_SLACK_INSTALL_ERROR_URL>'
-    INSTALL_SUCCESS_URL: '<YOUR_SLACK_INSTALL_SUCCESS_URL>'
+    CLIENT_ID: '249416069520.269132431858'
+    CLIENT_SECRET: 3be7d6259bdd57517a0223532d6bb7d4
+    VERIFICATION_TOKEN: wDQYNOELhCv1NzG6UjQcC3GY
+    INSTALL_ERROR_URL: http://krouze-webapp.s3-website-us-west-2.amazonaws.com/error.html
+    INSTALL_SUCCESS_URL: http://krouze-webapp.s3-website-us-west-2.amazonaws.com/success.html
     NAMESPACE: ${self:custom.namespace}
     TEAMS_TABLE: ${self:custom.namespace}-teams
   iamRoleStatements:

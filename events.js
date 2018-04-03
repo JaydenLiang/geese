@@ -38,15 +38,32 @@ const getTeam = (event) => {
     .then(data => Object.assign(event, { team: data.Item }));
 };
 
+/**
+* Check for direct message.
+* See: https://stackoverflow.com/questions/41111227/how-can-a-slack-bot-detect-a-direct-message-vs-a-message-in-a-channel
+*/
+const checkForDirectMessage = (event) => {
+  const messageType = event.slack.event.channel.substring(0, 1);
+  const botUserId = event.team.bot.bot_user_id;
+  const message = event.slack.event.text;
+  const messageReceivers = event.slack.event.authed_users;
+  if (messageReceivers.indexOf(botUserId) >= 0 && messageType == 'D') {
+    console.log(`Bot ${botUserId} received a direct message: "${message}"`);
+    return event;
+  }
+  else return null;
+};
+
 // Check for mention.
-const checkForMention = (event) => { // eslint-disable-line consistent-return
+const checkForMention = (event) => {
   const message = event.slack.event.text;
   const botUserId = event.team.bot.bot_user_id;
-  const botUserIsMentioned = new RegExp(`^<@${botUserId}>.*$`);
+  const botUserIsMentioned = new RegExp(`^.*<@${botUserId}>.*$`);
   if (botUserIsMentioned.test(message)) {
     console.log(`Bot ${botUserId} is mentioned in "${message}"`);
     return event;
   }
+  else return null;
 };
 
 // Invoke action endpoint, if valid request.
@@ -62,13 +79,22 @@ const invokeAction = (event) => {
   }).promise();
 };
 
+// Check if an action is needed to take
+const checkForActions = (event) => {
+  console.log(`Check for action on event: `, event);
+  if(checkForMention(event) === event
+    || checkForDirectMessage(event) === event
+  ){
+    return invokeAction(event);
+  }
+};
+
 module.exports.handler = (event, context, callback) =>
   Promise.resolve(event) // Start the promise chain
     .then(getSlackEvent) // Get just the Slack event payload
     .then(respond(callback)) // Respond OK to Slack
     .then(verifyToken) // Verify the token
     .then(getTeam) // Get the team data from DDB
-    .then(checkForMention) // Check message contains a mention of our bot
-    .then(invokeAction) // Invoke action function
+    .then(checkForActions) // Check if an action is needed to take, then invoke the action
     .catch(callback);
 
