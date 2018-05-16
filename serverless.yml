@@ -1,4 +1,4 @@
-service: forex
+service: krouze-geese-emonalysis
 
 #frameworkVersion: ">=1.9.0"
 custom:
@@ -7,7 +7,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs6.02
   stage: dev
   region: us-west-2
   environment:
@@ -16,8 +16,19 @@ provider:
     VERIFICATION_TOKEN: wDQYNOELhCv1NzG6UjQcC3GY
     INSTALL_ERROR_URL: http://krouze-webapp.s3-website-us-west-2.amazonaws.com/error.html
     INSTALL_SUCCESS_URL: http://krouze-webapp.s3-website-us-west-2.amazonaws.com/success.html
-    NAMESPACE: ${self:custom.namespace}
-    TEAMS_TABLE: ${self:custom.namespace}-teams
+    # NAMESPACE: ${self:custom.namespace}
+    # TEAMS_TABLE: ${self:custom.namespace}-teams
+    CLIENT_ID: '',
+    CLIENT_SECRET: '',
+    INSTALL_ERROR_URL: '',
+    INSTALL_SUCCESS_URL: '',
+    S3_BUCKET: '',
+    S3_REGION: '',
+    KAIROS_APP_ID: '',
+    KAIROS_APP_KEY: '',
+    APP_VERIFICATION_TOKEN: '',
+    LAMBDA_APP_NAMESPACE: '',
+    TEAMS_TABLE: '',
   iamRoleStatements:
     - Effect: Allow
       Action:

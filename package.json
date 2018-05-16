@@ -1,10 +1,14 @@
 {
-  "name": "ServerlessSlackBot",
+  "name": "EmonalysisSlackBot",
   "version": "1.0.0",
   "description": "",
   "main": "install.js",
   "dependencies": {
-    "node-fetch": "^1.6.3"
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "node-fetch": "^2.1.2",
+    "request": "^2.86.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {},
   "scripts": {
